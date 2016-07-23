@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import Sitter from './Sitter'
 
 class SitterList extends React.Component {
-  createUrl() {
-
-  }
 
   render() {
     let sitterNodes = this.props.data.map(function(sitter){
