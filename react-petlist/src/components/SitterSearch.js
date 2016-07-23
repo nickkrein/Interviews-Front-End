@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import SitterList from './SitterList';
 
 class SitterSearch extends Component {
-  
-  constructor(props) {
-    super(props)
-    this.state = {data : []};
+
+  state = {
+  	data: []
   }
 
   loadSitters() {
@@ -15,7 +14,6 @@ class SitterSearch extends Component {
   		// convert response to json
   		return response.json();
   	}).then((j) => {
-  		console.log(j.search);
   		return this.formatData(j.search);
   	}).then((data) => {
   		this.setState({data: data});
