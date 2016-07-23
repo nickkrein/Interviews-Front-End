@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Test from 'components/Test';
+import SitterSearch from 'components/SitterSearch';
 
 const dest = document.getElementById('content');
 
 ReactDOM.render(
   <div>
-    <Test value={2} default="messages" one="message" /><br/>
-    <Test value={1} default="messages" one="message" />
+  	<SitterSearch />
   </div>,
   dest
 );
