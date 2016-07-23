@@ -3,6 +3,10 @@ import Sitter from './Sitter'
 
 class SitterList extends React.Component {
 
+  static propTypes = {
+    data: React.PropTypes.arrayOf(React.PropTypes.object)
+  }
+
   render() {
     let sitterNodes = this.props.data.map((sitter) => {
       // assuming sitter.pet.id is unique

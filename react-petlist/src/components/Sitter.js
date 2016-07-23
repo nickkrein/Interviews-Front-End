@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 
 class Sitter extends Component {
 
+	static propTypes = {
+		title: React.PropTypes.string,
+		url: React.PropTypes.string,
+		user: React.PropTypes.object,
+		pet: React.PropTypes.object,
+		description: React.PropTypes.string
+	}
+
 	render() {
 		return (
 			<a href={this.props.url} className="sitter">
