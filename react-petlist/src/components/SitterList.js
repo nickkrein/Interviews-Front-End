@@ -4,7 +4,7 @@ import Sitter from './Sitter'
 class SitterList extends React.Component {
 
   render() {
-    let sitterNodes = this.props.data.map(function(sitter){
+    let sitterNodes = this.props.data.map((sitter) => {
       // assuming sitter.pet.id is unique
       return (
         <Sitter title={sitter.title} decription={sitter.description} user={sitter.user} pet={sitter.pet} url={sitter.url} description={sitter.description} key={sitter.pet.id} />
