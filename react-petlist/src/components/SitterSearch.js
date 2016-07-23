@@ -51,8 +51,9 @@ class SitterSearch extends Component {
 
   capitalizeFirst(str) {
   	// check if argument is a sentence or single word
+    // if multiple words, capitalize first letter of each word
   	return str.trim().split(' ').length > 1 ?
-  		str.replace(/[a-zA-Z0-9']+/g, (word) => {
+  		str.replace(/[a-zA-Z']+/g, (word) => {
   			return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
   		})
   	: str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
