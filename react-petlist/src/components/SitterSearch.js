@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SitterList from './SitterList';
+import '../styles/main.css';
 
 class SitterSearch extends Component {
 
@@ -149,16 +150,22 @@ class SitterSearch extends Component {
     return (
     <div className="sitter-search">
       <div className="filter-container">
-        <p>Looking For:</p>
         <div>
-          <input type="checkbox" ref={(cb)=>this._boarding=cb} value="boarding" onChange={this.filterSitters.bind(this)} /> 
-          <p><strong>Boarding</strong></p>
-          <p>At Host's Home</p>
+          <p>Looking For:</p>
         </div>
-        <div>
+        <div className="input-container">
+          <input type="checkbox" ref={(cb)=>this._boarding=cb} value="boarding" onChange={this.filterSitters.bind(this)} /> 
+          <div>
+            <p>Boarding</p>
+            <p>at Host's home</p>
+          </div>
+        </div>
+        <div className="input-container">
           <input type="checkbox" ref={(cb)=>this._sitting=cb} value="sitting" onChange={this.filterSitters.bind(this)} /> 
-          <p><strong>Sitting</strong></p>
-          <p>At My Home</p>
+          <div>
+            <p>Sitting</p>
+            <p>at my home</p>
+          </div>
         </div>
       </div>
       <SitterList data={this.state.data} />
