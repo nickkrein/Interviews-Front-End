@@ -78,6 +78,7 @@ class SitterSearch extends Component {
   capitalizeFirst(str) {
     // check if argument is a sentence or single word
     // if multiple words, capitalize first letter of each word
+    
     return str.trim().split(' ').length > 1 ?
       str.replace(/[a-zA-Z']+/g, (word) => {
         return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
@@ -86,6 +87,7 @@ class SitterSearch extends Component {
   }
 
   formatUrl(str) {
+
     let newUrl = str.trim();
     // remove all non alphanumeric characters, dashes, and underscores
     newUrl = newUrl.replace(/[^0-9a-zA-Z-_ ]/g, '');
@@ -95,10 +97,12 @@ class SitterSearch extends Component {
     if (str.indexOf('--') > -1) {
         newUrl = newUrl.replace(/-+/g, '-');
     }
+    
     return newUrl.toLowerCase();
   }
   
   formatDescription(str) {
+
     let description = str;
       if (description.charAt(47) === " ") {
         description = description.substr(0, 48).trim() + '...';
