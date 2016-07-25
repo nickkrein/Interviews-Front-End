@@ -24,6 +24,28 @@ class SitterSearch extends Component {
     })
   }
 
+  filterSitters(e) {
+
+    if (e.target.checked) {
+      // create query string to append
+      let queryString = '?service=' + e.target.value;
+      
+      for (var input of this.state.filterInputs) {
+        if (input.checked && input !== e.target) {
+          // uncheck all other checkboxes
+          input.checked = false;
+        }
+      }
+      // call to appropriate endpoint and append new query string
+      this.loadSitters(queryString);
+      window.history.pushState(null, null, queryString);
+
+    } else {
+      this.loadSitters();
+      window.history.pushState(null, null, '/');
+    }
+  }
+
   formatData(sitters) {
 
     let formattedSitters = sitters.map((sitter) => {
@@ -45,28 +67,6 @@ class SitterSearch extends Component {
     })
 
     return formattedSitters;
-  }
-
-  filterSitters(e) {
-
-    if (e.target.checked) {
-      // create query string to append
-      let queryString = '?service=' + e.target.value;
-      
-      for (var input of this.state.filterInputs) {
-        if (input.checked && input !== e.target) {
-          // uncheck all other checkboxes
-          input.checked = false;
-        }
-      }
-      // call to appropriate endpoint and append new query string
-      this.loadSitters(queryString);
-      window.history.pushState(null, null, queryString);
-
-    } else {
-      this.loadSitters();
-      window.history.pushState(null, null, '/');
-    }
   }
 
   /*====================================================
@@ -119,9 +119,29 @@ class SitterSearch extends Component {
   /*=====  End of Format Data Helper Functions  ======*/
 
   componentDidMount() {
-    this.loadSitters();
+    let urlSearch = window.location.search;
     let filterContainer = document.getElementsByClassName('filter-container')[0];
     let filterInputs = filterContainer.getElementsByTagName('input');
+    
+    if (urlSearch === '') {
+      this.loadSitters();
+    } else {
+      this.loadSitters(urlSearch);
+
+      // check appropriate box via refs if user navigates to page with querystring
+        // switch statement chosen for quick scalability
+      switch (urlSearch.split('=')[1]) {
+        case 'boarding':
+          this._boarding.checked = true;
+          break;
+        case 'sitting':
+          this._sitting.checked = true;
+          break;
+        default:
+          break;
+      }
+    }
+
     this.setState({filterInputs: filterInputs});
   }
 
@@ -129,8 +149,17 @@ class SitterSearch extends Component {
     return (
     <div className="sitter-search">
       <div className="filter-container">
-        <input type="checkbox" ref={(cb)=>this._boarding=cb} name="filter" value="boarding" onChange={this.filterSitters.bind(this)} /> Boarding
-        <input type="checkbox" ref={(cb)=>this._sitting=cb} name="filter" value="sitting" onChange={this.filterSitters.bind(this)} /> Sitting
+        <p>Looking For:</p>
+        <div>
+          <input type="checkbox" ref={(cb)=>this._boarding=cb} value="boarding" onChange={this.filterSitters.bind(this)} /> 
+          <p><strong>Boarding</strong></p>
+          <p>At Host's Home</p>
+        </div>
+        <div>
+          <input type="checkbox" ref={(cb)=>this._sitting=cb} value="sitting" onChange={this.filterSitters.bind(this)} /> 
+          <p><strong>Sitting</strong></p>
+          <p>At My Home</p>
+        </div>
       </div>
       <SitterList data={this.state.data} />
     </div>
