@@ -71,28 +71,6 @@ class SitterSearch extends Component {
     return formattedSitters;
   }
 
-  filterSitters(e) {
-
-    if (e.target.checked) {
-      // create query string to append
-      let queryString = '?service=' + e.target.value;
-      
-      for (var input of this.state.filterInputs) {
-        if (input.checked && input !== e.target) {
-          // uncheck all other checkboxes
-          input.checked = false;
-        }
-      }
-      // call to appropriate endpoint and append new query string
-      this.loadSitters(queryString);
-      window.history.pushState(null, null, queryString);
-
-    } else {
-      this.loadSitters();
-      window.history.pushState(null, null, '/');
-    }
-  }
-
   /*====================================================
   =            Format Data Helper Functions            =
   ====================================================*/
