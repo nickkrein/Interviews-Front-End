@@ -4,13 +4,15 @@ import SitterList from './SitterList';
 class SitterSearch extends Component {
 
   state = {
-  	data: []
+  	data: [],
+    filterInputs: []
   }
 
-  loadSitters() {
+  loadSitters(extension='') {
   	let location = window.location.origin; // http://localhost:3000
+    let endpoint = '/static/search.json' + extension;
 
-  	fetch(location + '/static/search.json', {method: 'get'}).then((response) => {
+  	fetch(endpoint, {method: 'get'}).then((response) => {
   		// convert response to json
   		return response.json();
   	}).then((j) => {
@@ -43,6 +45,28 @@ class SitterSearch extends Component {
   	})
 
   	return formattedSitters;
+  }
+
+  filterSitters(e) {
+
+    if (e.target.checked) {
+      // create query string to append
+      let queryString = '?service=' + e.target.value;
+      
+      for (var input of this.state.filterInputs) {
+        if (input.checked && input !== e.target) {
+          // uncheck all other checkboxes
+          input.checked = false;
+        }
+      }
+      // call to appropriate endpoint and append new query string
+      this.loadSitters(queryString);
+      window.history.pushState(null, null, queryString);
+
+    } else {
+      this.loadSitters();
+      window.history.pushState(null, null, '/');
+    }
   }
 
   /*====================================================
@@ -96,12 +120,18 @@ class SitterSearch extends Component {
 
   componentDidMount() {
   	this.loadSitters();
+    let filterContainer = document.getElementsByClassName('filter-container')[0];
+    let filterInputs = filterContainer.getElementsByTagName('input');
+    this.setState({filterInputs: filterInputs});
   }
 
   render() {
     return (
-    <div className='sitterSearch'>
-    	<h1>DogVacay</h1>
+    <div className="sitter-search">
+    	<div className="filter-container">
+        <input type="checkbox" ref={(cb)=>this._boarding=cb} name="filter" value="boarding" onChange={this.filterSitters.bind(this)} /> Boarding
+        <input type="checkbox" ref={(cb)=>this._sitting=cb} name="filter" value="sitting" onChange={this.filterSitters.bind(this)} /> Sitting
+      </div>
     	<SitterList data={this.state.data} />
     </div>
     );
