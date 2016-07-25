@@ -11,7 +11,7 @@ class SitterList extends React.Component {
     let sitterNodes = this.props.data.map((sitter) => {
       // assuming sitter.pet.id is unique
       return (
-        <Sitter className="sitter-list" title={sitter.title} decription={sitter.description} user={sitter.user} pet={sitter.pet} url={sitter.url} description={sitter.description} key={sitter.pet.id} />
+        <Sitter title={sitter.title} decription={sitter.description} user={sitter.user} pet={sitter.pet} url={sitter.url} description={sitter.description} key={sitter.pet.id} />
       );
     });
     return (
